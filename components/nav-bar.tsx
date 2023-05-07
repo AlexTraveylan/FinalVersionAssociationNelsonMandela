@@ -14,9 +14,8 @@ export function NavBar() {
 
   const links = [
     { title: 'Accueil', href: '/' },
-    { title: 'Qui sommes-nous ?', href: '/about' },
-    { title: 'Comptabilité', href: '/accounting' },
-    { title: 'Historique', href: '/history' },
+    { title: 'Nous', href: '/about-us' },
+    { title: 'Comptabilité', href: '/comptabilite' },
     { title: 'Nous rejoindre', href: 'join-us' },
   ]
   return (
