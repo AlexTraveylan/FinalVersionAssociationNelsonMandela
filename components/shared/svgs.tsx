@@ -1,3 +1,8 @@
+interface SvgProps {
+  size?: number
+  stroke?: number
+}
+
 export function Logo() {
   return (
     <svg
@@ -25,7 +30,7 @@ export function Logo() {
   )
 }
 
-export function Deconnexion() {
+export function SvgDeconnexion() {
   return (
     <svg
       className="cursor-pointer ease-in duration-100 hover:scale-110"
@@ -46,7 +51,7 @@ export function Deconnexion() {
   )
 }
 
-export function Connexion() {
+export function SvgConnexion() {
   return (
     <svg
       className="cursor-pointer ease-in duration-100 hover:scale-110"
@@ -227,6 +232,50 @@ export function SvgUser() {
         d="M5 20v-1a7 7 0 017-7v0a7 7 0 017 7v1M12 12a4 4 0 100-8 4 4 0 000 8z"
         stroke="#000000"
         strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
+    </svg>
+  )
+}
+
+export function SvgChevronLeft({ size = 25, stroke = 1.3 }: SvgProps) {
+  return (
+    <svg
+      width={`${size}px`}
+      height={`${size}px`}
+      strokeWidth={`${stroke}`}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      color="rgb(55 65 81)"
+    >
+      <path
+        d="M15 6l-6 6 6 6"
+        stroke="rgb(55 65 81)"
+        strokeWidth={`${stroke}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
+    </svg>
+  )
+}
+
+export function SvgChevronRight({ size = 25, stroke = 1.3 }: SvgProps) {
+  return (
+    <svg
+      width={`${size}px`}
+      height={`${size}px`}
+      strokeWidth={`${stroke}`}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      color="rgb(55 65 81)"
+    >
+      <path
+        d="M9 6l6 6-6 6"
+        stroke="rgb(55 65 81)"
+        strokeWidth={`${stroke}`}
         strokeLinecap="round"
         strokeLinejoin="round"
       ></path>

@@ -1,0 +1,20 @@
+.radio__form__field {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding-top: 5px;
+}
+
+.radio__form__field input[type='radio'] {
+  appearance: none; /* masquer le style par défaut du navigateur */
+  -webkit-appearance: none; /* masquer le style par défaut pour les navigateurs basés sur WebKit (comme Safari) */
+  width: 15px; /* définir la largeur du bouton radio */
+  height: 15px; /* définir la hauteur du bouton radio */
+  border: 2px solid #34d399; /* ajouter une bordure */
+  background-color: white; /* définir la couleur de fond du bouton radio */
+  margin-right: 5px; /* ajouter un peu d'espace entre les boutons radio */
+}
+
+.radio__form__field input[type='radio']:checked {
+  background-color: #34d399; /* définir la couleur de fond du bouton radio sélectionné */
+}

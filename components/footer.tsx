@@ -10,8 +10,8 @@ export function Footer() {
       <p className="min-w-[20%]">Alpha v 0.0.1</p>
       <p>{`${formatMouth} ${year}`}</p>
       <p className="min-w-[20%] text-right">
-        <Link href="https://github.com/AlexTraveylan">
-          Created by Alex Traveylan
+        <Link href="https://github.com/AlexTraveylan/FinalVersionAssociationNelsonMandela">
+          Open source
         </Link>
       </p>
     </footer>
