@@ -10,4 +10,74 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model UserApp {
+  id                  Int            @id @default(autoincrement())
+  name                String     
+  email               String         @unique
+  role                String?
+  profilePictureUrl   String? 
+  iv                  String?
+  encryptedAESKey     Bytes?
+  publicKey           Bytes
+  privateKey          Bytes
+  isAdmin             Boolean        @default(false)
+  createdAt           DateTime       @default(now())
+  contribution        Contribution?  @relation("user_app_to_contribution")
+}
 
+model Contribution {
+  id              Int        @id @default(autoincrement())
+  status          String     @default("Pending")
+  begin           DateTime
+  userId          Int        @unique
+  user            UserApp    @relation("user_app_to_contribution", fields: [userId], references: [id])
+}
+
+model AssoEvent {
+  id          Int              @id @default(autoincrement())
+  afficheUrl  String?
+  createdAt   DateTime         @default(now())
+  createdBy   String
+  modifyAt    String?
+  modifyBy    String?
+  beginAt     DateTime
+  title       String
+  content     String
+  linkUrl     String?
+  linkContent String           @default("En savoir plus")
+  backups     BackUpAssoEvent[] @relation("back_up_asso_event_to_asso_event")
+}
+
+model BackUpAssoEvent {
+  id          Int              @id @default(autoincrement())
+  afficheUrl  String?
+  createdAt   DateTime         @default(now())
+  createdBy   String
+  modifyAt    String?
+  modifyBy    String?
+  beginAt     DateTime
+  title       String
+  content     String
+  linkUrl     String?
+  linkContent String           @default("En savoir plus")
+  assoEventId     Int
+  assoEvent       AssoEvent     @relation("back_up_asso_event_to_asso_event", fields: [assoEventId], references: [id])
+}
+
+model LogAssoEvent {
+  id          Int              @id @default(autoincrement())
+  objectId    String
+  message     String
+}
+
+model Comptabilite {
+
+  id             Int              @id @default(autoincrement())
+  date           DateTime
+  from           String
+  label          String
+  amount         Float
+  paiementType   String
+  note           String?
+  tresorierToken String
+}

@@ -40,7 +40,6 @@ export default function Header() {
             </>
           ) : (
             <>
-              <h3>Connectez-vous</h3>
               <Link
                 className="min-w-[20%] flex justify-end"
                 href={`/api/auth/signin`}

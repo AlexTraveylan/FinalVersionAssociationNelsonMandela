@@ -42,13 +42,16 @@ export function Carroussel({ images }: { images: imageCaroussel[] }) {
                 />
               </div>
               {image.titleContent && image.textContent && (
-                <div className="text__content absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-gray-900/60 py-5 px-12 text-white flex flex-col items-center justify-center gap-3">
-                  <h1 className="font-bold text-center">
+                <div className="text__content absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] bg-gray-900/60 py-2 px-5 text-white flex flex-col items-center justify-center gap-3 ">
+                  <h1 className="font-bold text-center text-emerald-300">
                     {image.titleContent}
                   </h1>
                   <p className="text-center">{image.textContent}</p>
                   {image.linkUrl && (
-                    <Link href={image.linkUrl} className="text-center">
+                    <Link
+                      href={image.linkUrl}
+                      className="text-center text-emerald-300"
+                    >
                       En savoir plus
                     </Link>
                   )}
