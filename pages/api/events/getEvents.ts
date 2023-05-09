@@ -1,6 +1,6 @@
 import { AssoEvent } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { AssoEventService } from '../../services/asso-event.service'
+import { AssoEventService } from '../../../services/asso-event.service'
 
 export type eventAssoApi = {
   id: string

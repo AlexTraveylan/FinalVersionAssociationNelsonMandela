@@ -3,13 +3,9 @@ import { prisma } from '../prisma/prisma-client'
 
 export class ContributionService {
   async createContribution(
-    status: 'pending' | 'ok' | 'expired',
-    begin: Date,
-    userId: number
+    data: Omit<Contribution, 'id' | 'status' | 'begin'>
   ): Promise<Contribution> {
-    const contribution = await prisma.contribution.create({
-      data: { status, begin, userId },
-    })
+    const contribution = await prisma.contribution.create({ data })
     return contribution
   }
 

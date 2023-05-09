@@ -10,41 +10,39 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model UserApp {
+model UserAppAsso {
   id                  Int            @id @default(autoincrement())
   name                String     
   email               String         @unique
-  role                String?
+  isActive            Boolean
+  phone               String?
+  role                String?        @default("Membre")
   profilePictureUrl   String? 
-  iv                  String?
-  encryptedAESKey     Bytes?
-  publicKey           Bytes
-  privateKey          Bytes
-  isAdmin             Boolean        @default(false)
-  createdAt           DateTime       @default(now())
-  contribution        Contribution?  @relation("user_app_to_contribution")
+  isAdmin             Boolean?        @default(false)
+  createdAt           DateTime?       @default(now())
+  contribution        Contribution?  @relation("user_app_asso_to_contribution")
 }
 
 model Contribution {
   id              Int        @id @default(autoincrement())
-  status          String     @default("Pending")
-  begin           DateTime
+  status          String?     @default("Pending")
+  begin           DateTime?
   userId          Int        @unique
-  user            UserApp    @relation("user_app_to_contribution", fields: [userId], references: [id])
+  user            UserAppAsso    @relation("user_app_asso_to_contribution", fields: [userId], references: [id])
 }
 
 model AssoEvent {
   id          Int              @id @default(autoincrement())
   afficheUrl  String?
-  createdAt   DateTime         @default(now())
-  createdBy   String
+  createdAt   DateTime?         @default(now())
+  createdBy   String?           @default("Admin")
   modifyAt    String?
   modifyBy    String?
   beginAt     DateTime
   title       String
   content     String
   linkUrl     String?
-  linkContent String           @default("En savoir plus")
+  linkContent String?           @default("En savoir plus")
   backups     BackUpAssoEvent[] @relation("back_up_asso_event_to_asso_event")
 }
 

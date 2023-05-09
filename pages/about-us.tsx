@@ -3,7 +3,7 @@ import { EventForm } from '../components/event-form'
 import Layout from '../components/layout'
 import { Loader } from '../components/shared/loader'
 import { SvgPlus } from '../components/shared/svgs'
-import { eventAssoApi } from './api/getEvents'
+import { eventAssoApi } from './api/events/getEvents'
 
 export default function AboutUs() {
   const [showForm, setShowForm] = useState(false)
@@ -12,7 +12,7 @@ export default function AboutUs() {
 
   async function recupEvents() {
     setLoading(true)
-    const response = await fetch('api/getEvents')
+    const response = await fetch('api/events/getEvents')
     if (response.ok) {
       const data: eventAssoApi[] = await response.json()
       setEvents(data)

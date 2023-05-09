@@ -1,24 +1,32 @@
-import { UserApp } from '@prisma/client'
+import { UserAppAsso } from '@prisma/client'
 import { prisma } from '../prisma/prisma-client'
 
-export class UserAppService {
-  async createUser(data: Omit<UserApp, 'id'>): Promise<UserApp> {
-    const user = await prisma.userApp.create({ data })
+export class UserAppAssoService {
+  async createUser(
+    data: Omit<
+      UserAppAsso,
+      'id' | 'role' | 'profilePictureUrl' | 'createdAt' | 'isAdmin'
+    >
+  ): Promise<UserAppAsso> {
+    const user = await prisma.userAppAsso.create({ data })
     return user
   }
 
-  async getUserByEmail(email: string): Promise<UserApp | null> {
-    const user = await prisma.userApp.findUnique({ where: { email } })
+  async getUserByEmail(email: string): Promise<UserAppAsso | null> {
+    const user = await prisma.userAppAsso.findUnique({ where: { email } })
     return user
   }
 
-  async updateUser(id: number, data: Partial<UserApp>): Promise<UserApp> {
-    const user = await prisma.userApp.update({ where: { id }, data })
+  async updateUser(
+    id: number,
+    data: Partial<UserAppAsso>
+  ): Promise<UserAppAsso> {
+    const user = await prisma.userAppAsso.update({ where: { id }, data })
     return user
   }
 
-  async deleteUser(id: number): Promise<UserApp> {
-    const user = await prisma.userApp.delete({ where: { id } })
+  async deleteUser(id: number): Promise<UserAppAsso> {
+    const user = await prisma.userAppAsso.delete({ where: { id } })
     return user
   }
 }

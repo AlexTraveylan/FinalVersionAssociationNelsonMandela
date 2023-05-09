@@ -9,14 +9,11 @@ import { SvgClose } from './shared/svgs'
 
 interface FormData {
   afficheUrl: string
-  createdBy: string
-  modifyAt: string
-  modifyBy: string
   beginAt: string
   title: string
   content: string
-  linkUrl: string
-  linkContent: string
+  linkUrl?: string
+  linkContent?: string
 }
 
 export function EventForm({
@@ -26,16 +23,12 @@ export function EventForm({
 }) {
   const [formData, setFormData] = useState<FormData>({
     afficheUrl: '',
-    createdBy: '',
-    modifyAt: '',
-    modifyBy: '',
     beginAt: '',
     title: '',
     content: '',
     linkUrl: '',
     linkContent: '',
   })
-  const ratioImage = 0.45
 
   function handleChange(
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -46,7 +39,8 @@ export function EventForm({
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log('Form Data:', formData)
+    console.log(formData)
+    // const response = await fetch("api/events/createEvents", {method: "POST", body: })
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
@@ -58,7 +52,7 @@ export function EventForm({
   }
 
   return (
-    <div className="fixed top-1/2 translate-y-[-50%] z-99 bg-indigo-900 px-4 py-8 rounded-xl flex flex-col items-center">
+    <div className="fixed top-1/2 translate-y-[-50%] z-99 bg-white px-4 py-8 rounded-xl shadow-2xl flex flex-col items-center">
       <div
         className="absolute top-2 right-2 text-red-500 text-2xl cursor-pointer"
         onClick={() => setShowForm(false)}
@@ -70,7 +64,7 @@ export function EventForm({
       </h2>
       <form className="flex flex-col w-72 gap-4" onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="affiche" className="mb-1 text-white">
+          <label htmlFor="affiche" className="mb-1">
             Date de l'évenement
           </label>
           <input
@@ -82,7 +76,7 @@ export function EventForm({
           />
         </div>
         <div>
-          <label htmlFor="affiche" className="mb-1 text-white">
+          <label htmlFor="affiche" className="mb-1">
             Titre de l'évenement
           </label>
           <input
@@ -94,7 +88,7 @@ export function EventForm({
           />
         </div>
         <div>
-          <label htmlFor="content" className="mb-1 text-white">
+          <label htmlFor="content" className="mb-1">
             Contenu
           </label>
           <textarea
@@ -107,7 +101,7 @@ export function EventForm({
           ></textarea>
         </div>
         <div>
-          <label htmlFor="affiche" className="mb-1 text-white">
+          <label htmlFor="affiche" className="mb-1">
             Photo de l'affiche (facultatif)
           </label>
           <input
@@ -119,7 +113,7 @@ export function EventForm({
           />
         </div>
         <div>
-          <label htmlFor="affiche" className="mb-1 text-white">
+          <label htmlFor="affiche" className="mb-1">
             Lien (facultatif)
           </label>
           <input
@@ -132,7 +126,7 @@ export function EventForm({
         </div>
 
         <div>
-          <label htmlFor="affiche" className="mb-1 text-white">
+          <label htmlFor="affiche" className="mb-1">
             Phrase pour le lien (facultatif)
           </label>
           <input
@@ -145,7 +139,7 @@ export function EventForm({
         </div>
         <button
           type="submit"
-          className="w-full py-1 font-bold text-white bg-emerald-400 rounded-xl"
+          className="w-full py-1 font-bold bg-emerald-400 text-white rounded-xl"
         >
           Ajouter à la liste des évenements
         </button>

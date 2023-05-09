@@ -2,7 +2,9 @@ import { AssoEvent } from '@prisma/client'
 import { prisma } from '../prisma/prisma-client'
 
 export class AssoEventService {
-  async createAssoEvent(data: Omit<AssoEvent, 'id'>): Promise<AssoEvent> {
+  async createAssoEvent(
+    data: Omit<AssoEvent, 'id' | 'createdAt' | 'modifyAt' | 'modifyBy'>
+  ): Promise<AssoEvent> {
     const assoEvent = await prisma.assoEvent.create({ data })
     return assoEvent
   }
