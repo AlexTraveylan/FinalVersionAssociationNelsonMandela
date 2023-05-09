@@ -7,7 +7,7 @@ export type eventAssoApi = {
   beginAt: string
   title: string
   content: string
-  linkContent: string
+  linkContent: string | null
   linkUrl?: string | undefined | null
   affichieUrl?: string | undefined | null
 }
