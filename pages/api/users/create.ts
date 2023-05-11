@@ -1,4 +1,3 @@
-import { Contribution, UserAppAsso } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { ContributionService } from '../../../services/contribution.service'
 import { privateKeyDecrypt } from '../../../services/security.service'
@@ -10,7 +9,6 @@ export default async function handler(
 ) {
   const userService = new UserAppAssoService()
   const contributionService = new ContributionService()
-  const ERROR = res.status(400).json({ message: 'Echec de la creation' })
 
   if (req.method === 'POST') {
     const {
@@ -27,51 +25,79 @@ export default async function handler(
       encryptedPhone: string
     } = req.body
 
-    const privateKey = process.env.PRIVATE_KEY
-    if (!privateKey || !encryptedEmail) return ERROR
-    const encryptedEmail_buffer = Buffer.from(encryptedEmail, 'utf-8')
-    const privateKey_buffer = Buffer.from(privateKey, 'utf-8')
-    const emailDecrypted = privateKeyDecrypt(
-      encryptedEmail_buffer,
-      privateKey_buffer
-    )
-    const emailDecryptedToString = emailDecrypted.toString('utf-8')
+    const privateKeySingleLine = process.env.PRIVATE_KEY
+    if (!privateKeySingleLine || !encryptedEmail) {
+      return res.status(400).json({ message: 'Echec de la creation' })
+    }
 
-    const tryToFindUser = await userService.getUserByEmail(
-      emailDecryptedToString
-    )
-    if (tryToFindUser) return ERROR
+    const privateKey = privateKeySingleLine.replace(/\\n/g, '\n')
 
-    let phoneDecrypted: Buffer | null = null
-    if (encryptedPhone != '') {
-      const encryptedPhone_buffer = Buffer.from(encryptedPhone, 'utf-8')
-      phoneDecrypted = privateKeyDecrypt(
-        encryptedPhone_buffer,
+    const encryptedEmail_buffer = Buffer.from(encryptedEmail, 'base64')
+    const privateKey_buffer = Buffer.from(privateKey, 'base64')
+
+    try {
+      const emailDecrypted = privateKeyDecrypt(
+        encryptedEmail_buffer,
         privateKey_buffer
       )
+    } catch (error) {
+      console.error('Erreur lors du décryptage :', error)
+      // Vous pouvez renvoyer une réponse avec l'erreur pour la voir côté client
+      return res
+        .status(500)
+        .json({ message: 'Erreur lors du décryptage', error: error })
     }
 
-    const newUser: Omit<
-      UserAppAsso,
-      'id' | 'role' | 'profilePictureUrl' | 'createdAt' | 'isAdmin'
-    > = {
-      name: `${prenom} ${nom}`,
-      email: emailDecryptedToString,
-      isActive: membre === 'actif',
-      phone: phoneDecrypted ? phoneDecrypted.toString('utf-8') : null,
-    }
+    // const emailDecrypted = privateKeyDecrypt(
+    //   encryptedEmail_buffer,
+    //   privateKey_buffer
+    // )
 
-    const createdUser = await userService.createUser(newUser)
-    if (!createdUser) return ERROR
+    // const emailDecryptedToString = emailDecrypted.toString('utf-8')
 
-    const newContribution: Omit<Contribution, 'id' | 'status' | 'begin'> = {
-      userId: createdUser.id,
-    }
-    const createdContribution = await contributionService.createContribution(
-      newContribution
-    )
-    if (!createdContribution) return ERROR
+    //   const tryToFindUser = await userService.getUserByEmail(
+    //     emailDecryptedToString
+    //   )
+    //   if (tryToFindUser) {
+    //     return res.status(400).json({ message: 'Echec de la creation' })
+    //   }
+
+    //   let phoneDecrypted!: Buffer
+    //   if (encryptedPhone != '') {
+    //     const encryptedPhone_buffer = Buffer.from(encryptedPhone, 'utf-8')
+    //     phoneDecrypted = privateKeyDecrypt(
+    //       encryptedPhone_buffer,
+    //       privateKey_buffer
+    //     )
+    //   }
+
+    //   const newUser: Omit<
+    //     UserAppAsso,
+    //     'id' | 'role' | 'profilePictureUrl' | 'createdAt' | 'isAdmin'
+    //   > = {
+    //     name: `${prenom} ${nom}`,
+    //     email: emailDecryptedToString,
+    //     isActive: membre === 'actif',
+    //     phone: encryptedPhone === '' ? null : phoneDecrypted.toString('utf-8'),
+    //   }
+
+    //   const createdUser = await userService.createUser(newUser)
+    //   if (!createdUser) {
+    //     return res.status(400).json({ message: 'Echec de la creation' })
+    //   }
+
+    //   const newContribution: Omit<Contribution, 'id' | 'status' | 'begin'> = {
+    //     userId: createdUser.id,
+    //   }
+    //   const createdContribution = await contributionService.createContribution(
+    //     newContribution
+    //   )
+    //   if (!createdContribution) {
+    //     return res.status(400).json({ message: 'Echec de la creation' })
+    //   }
 
     return res.status(201).json({ message: 'Création réussie' })
   }
+
+  return res.status(400).json({ message: 'Echec de la creation' })
 }

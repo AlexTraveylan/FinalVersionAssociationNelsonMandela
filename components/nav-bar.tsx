@@ -1,23 +1,23 @@
 import Link from 'next/link'
-import { useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import style from './nav-bar.module.css'
 
 export function NavBar() {
-  const [activeLink, setActiveLink] = useState<number | null>(null)
+  const router = useRouter()
+  const [activeLink, setActiveLink] = useState('')
 
-  const handleLinkClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
-    index: number
-  ) => {
-    setActiveLink(index)
-  }
+  useEffect(() => {
+    setActiveLink(router.pathname) // met à jour le lien actif lors du changement de route
+  }, [router.pathname])
 
   const links = [
     { title: 'Accueil', href: '/' },
-    { title: 'Nous', href: 'about-us' },
-    { title: 'Comptabilité', href: 'comptabilite' },
-    { title: 'Nous rejoindre', href: 'join-us' },
+    { title: 'Qui sommes-nous ?', href: '/about-us' },
+    // { title: 'Comptabilité', href: '/comptabilite' },
+    { title: 'Nous rejoindre', href: '/join-us' },
   ]
+
   return (
     <>
       <div className={style.nav__container}>
@@ -26,8 +26,7 @@ export function NavBar() {
             <Link
               key={index}
               href={link.href}
-              onClick={(event) => handleLinkClick(event, index)}
-              className={index === activeLink ? style.active : ''}
+              className={link.href === activeLink ? style.active : ''}
             >
               {link.title}
             </Link>

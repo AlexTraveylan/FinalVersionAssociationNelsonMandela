@@ -18,6 +18,10 @@ export function Carroussel({ images }: { images: imageCaroussel[] }) {
   const [currentIndex, setCurrentindex] = useState(0)
   const imagesLength = images.length
   const image = images[currentIndex]
+  const maxWidth = images.reduce(
+    (curr, acc) => (acc.height > curr ? acc.height : curr),
+    0
+  )
 
   function next() {
     setCurrentindex((currentIndex + 1) % imagesLength)
@@ -37,8 +41,8 @@ export function Carroussel({ images }: { images: imageCaroussel[] }) {
                 <Image
                   alt={image.alt}
                   src={image.imageUrl}
-                  width={image.width}
-                  height={image.height}
+                  width={maxWidth}
+                  height={(image.height * maxWidth) / image.width}
                 />
               </div>
               {image.titleContent && image.textContent && (

@@ -7,7 +7,7 @@ export function Footer() {
   const formatMouth = mouth.charAt(0).toUpperCase() + mouth.slice(1)
   return (
     <footer className="flex flex-row justify-between items-center px-3 h-24">
-      <p className="min-w-[20%]">Alpha v 0.0.1</p>
+      <p className="min-w-[20%]">Alpha v 0.3.1</p>
       <p>{`${formatMouth} ${year}`}</p>
       <p className="min-w-[20%] text-right">
         <Link href="https://github.com/AlexTraveylan/FinalVersionAssociationNelsonMandela">

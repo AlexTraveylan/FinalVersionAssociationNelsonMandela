@@ -16,6 +16,7 @@
   text-decoration: none;
   display: inline-block;
   position: relative;
+  color: grey;
 }
 
 .nav__container a::after {
@@ -33,6 +34,10 @@
 
 .nav__container a:hover::after {
   transform: scaleX(1);
+}
+
+.nav__container a.active {
+  color: black;
 }
 
 .nav__container a.active::after {

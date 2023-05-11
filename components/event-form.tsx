@@ -18,8 +18,10 @@ interface FormData {
 
 export function EventForm({
   setShowForm,
+  recupEvents,
 }: {
   setShowForm: Dispatch<SetStateAction<boolean>>
+  recupEvents: () => Promise<void>
 }) {
   const [formData, setFormData] = useState<FormData>({
     afficheUrl: '',
@@ -37,16 +39,27 @@ export function EventForm({
     setFormData({ ...formData, [name]: value })
   }
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    console.log(formData)
-    // const response = await fetch("api/events/createEvents", {method: "POST", body: })
+    setShowForm(false)
+
+    const response = await fetch('api/events/createEvents', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(formData),
+    })
+
+    if (!response) return
+    const data = await response.json()
+    recupEvents()
   }
 
   function handleKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) {
     if (e.key === 'Enter') {
       e.preventDefault()
-      const newValue = formData.content + '\n  '
+      const newValue = formData.content + '\n'
       setFormData({ ...formData, content: newValue })
     }
   }
@@ -93,14 +106,13 @@ export function EventForm({
           </label>
           <textarea
             name="content"
-            placeholder="Contenu"
             value={formData.content}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            className="w-full p-1 bg-gray-300 rounded rounded-xl indent-2 h-48 overflow-y-auto resize-none"
+            className="w-full p-1 bg-gray-300 rounded rounded-xl px-3 h-32 overflow-y-auto resize-none"
           ></textarea>
         </div>
-        <div>
+        {/* <div>
           <label htmlFor="affiche" className="mb-1">
             Photo de l'affiche (facultatif)
           </label>
@@ -136,7 +148,7 @@ export function EventForm({
             value={formData.linkContent}
             onChange={handleChange}
           />
-        </div>
+        </div> */}
         <button
           type="submit"
           className="w-full py-1 font-bold bg-emerald-400 text-white rounded-xl"

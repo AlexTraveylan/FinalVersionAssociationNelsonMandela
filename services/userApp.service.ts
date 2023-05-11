@@ -29,4 +29,9 @@ export class UserAppAssoService {
     const user = await prisma.userAppAsso.delete({ where: { id } })
     return user
   }
+
+  async getAllUsers(): Promise<UserAppAsso[]> {
+    const users = await prisma.userAppAsso.findMany()
+    return users
+  }
 }

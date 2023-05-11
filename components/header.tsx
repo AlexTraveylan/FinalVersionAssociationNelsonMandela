@@ -53,7 +53,6 @@ export default function Header() {
             </>
           )}
         </div>
-        <hr />
       </header>
     </>
   )

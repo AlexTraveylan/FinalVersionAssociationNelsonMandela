@@ -1,11 +1,13 @@
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Layout from '../components/layout'
 import style from './joinus.module.css'
 
 export default function JoinusPage() {
   const { data: session } = useSession()
+  const router = useRouter()
   const [nom, setNom] = useState('')
   const [prenom, setPrenom] = useState('')
   const [email, setEmail] = useState('')
@@ -24,25 +26,43 @@ export default function JoinusPage() {
     }
   }, [])
 
-  function helloAssoRedirect(e: React.MouseEvent) {
-    e.preventDefault()
+  function helloAssoRedirect() {
     const destination =
       'https://www.helloasso.com/associations/ape-du-groupe-scolaire-nelson-mandela-de-bordeaux/adhesions/cotisation/widget'
     window.open(destination, '_blank')
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+    // const response1 = await fetch('api/users/getPublicKey')
+    // if (!response1.ok) return
+    // const data = await response1.json()
+    // const publicKey = String(data.public_key)
+    // if (!publicKey) return
+    // const emailBuffer = Buffer.from(email, 'utf8')
+    // const phoneBuffer = Buffer.from(phone, 'utf8')
+    // const encryptedEmail = publicKeyEncrypt(emailBuffer, publicKey)
+    // const encryptedPhone = publicKeyEncrypt(phoneBuffer, publicKey)
 
-    const data = {
-      nom,
-      prenom,
-      email,
-      membre,
-      phone,
+    const newUser = {
+      nom: nom,
+      prenom: prenom,
+      email: email,
+      membre: membre,
+      phone: phone,
     }
 
-    console.log(data)
+    const response = await fetch('api/users/create2', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    })
+
+    if (response.ok) {
+      router.push('/about-us')
+    }
   }
 
   return (
@@ -144,7 +164,7 @@ export default function JoinusPage() {
           <div className="w-full">
             <button
               type="submit"
-              onClick={(e) => helloAssoRedirect(e)}
+              onClick={(e) => handleSubmit(e)}
               className="w-full py-1 font-bold text-white bg-emerald-400 rounded-xl"
             >
               Payer la cotisation : 1€

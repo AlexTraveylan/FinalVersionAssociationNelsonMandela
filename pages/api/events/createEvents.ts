@@ -1,10 +1,9 @@
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '../auth/[...nextauth]'
-
 import { AssoEvent } from '@prisma/client'
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { getServerSession } from 'next-auth'
 import { AssoEventService } from '../../../services/asso-event.service'
 import { UserAppAssoService } from '../../../services/userApp.service'
+import { authOptions } from '../auth/[...nextauth]'
 
 export default async function handler(
   req: NextApiRequest,
@@ -13,14 +12,18 @@ export default async function handler(
   const session = await getServerSession(req, res, authOptions)
   const userService = new UserAppAssoService()
   const eventService = new AssoEventService()
-  const ERROR = res.status(400).json({ message: 'Echec de la creation' })
+  // const ERROR = res.status(400).json({ message: 'Echec de la creation' })
+
+  console.log(req.body)
 
   if (session?.user?.email && req.method === 'POST') {
-    const currentUser = await userService.getUserByEmail(session.user.email)
-    if (!currentUser?.isAdmin) return ERROR
+    // const currentUser = await userService.getUserByEmail(session.user.email)
+    // if (!currentUser?.isAdmin) return ERROR
 
     const { afficheUrl, beginAt, title, content, linkUrl, linkContent } =
       req.body
+
+    console.log(req.body)
 
     const timeStampForBeginAt = Date.parse(beginAt)
 
@@ -29,7 +32,8 @@ export default async function handler(
       'id' | 'createdAt' | 'modifyAt' | 'modifyBy'
     > = {
       afficheUrl: null,
-      createdBy: currentUser.name,
+      // createdBy: currentUser.name,
+      createdBy: 'admin',
       beginAt: new Date(timeStampForBeginAt),
       title: title,
       content: content,
@@ -38,8 +42,10 @@ export default async function handler(
     }
 
     const createdEvent = await eventService.createAssoEvent(newEvent)
-    if (!createdEvent) return ERROR
+    if (!createdEvent)
+      return res.status(400).json({ message: 'Echec de la creation' })
 
     return res.status(201).json({ message: 'Création réussie' })
   }
+  return res.status(400).json({ message: 'Echec de la creation' })
 }
