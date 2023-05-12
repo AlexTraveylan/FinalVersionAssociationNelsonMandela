@@ -5,6 +5,7 @@ import {
   SetStateAction,
   useState,
 } from 'react'
+import { supabase } from '../services/supabase-client'
 import { SvgClose } from './shared/svgs'
 
 interface FormData {
@@ -43,16 +44,37 @@ export function EventForm({
     e.preventDefault()
     setShowForm(false)
 
-    const response = await fetch('api/events/createEvents', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
+    const formData2 = new FormData(e.target as HTMLFormElement)
+    const file = formData2.get('afficheUrl') as File | null | undefined
+    if (!file) return
+    const extension = file.name.split('.').pop()
 
-    if (!response) return
-    const data = await response.json()
+    console.log(
+      !(extension == 'jpg' || extension == 'jpeg' || extension == 'png')
+    )
+
+    if (!(extension == 'jpg' || extension == 'jpeg' || extension == 'png'))
+      return
+    const fileName = `${file.name
+      .split('.')[0]
+      .replaceAll(' ', '_')}_${new Date().getTime()}.${extension}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('APE_bucket')
+      .upload(fileName, file)
+
+    console.log(fileName)
+
+    // const response = await fetch('api/events/createEvents', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify(formData),
+    // })
+
+    // if (!response) return
+    // const data = await response.json()
     recupEvents()
   }
 
@@ -112,7 +134,7 @@ export function EventForm({
             className="w-full p-1 bg-gray-300 rounded rounded-xl px-3 h-32 overflow-y-auto resize-none"
           ></textarea>
         </div>
-        {/* <div>
+        <div>
           <label htmlFor="affiche" className="mb-1">
             Photo de l'affiche (facultatif)
           </label>
@@ -148,7 +170,7 @@ export function EventForm({
             value={formData.linkContent}
             onChange={handleChange}
           />
-        </div> */}
+        </div>
         <button
           type="submit"
           className="w-full py-1 font-bold bg-emerald-400 text-white rounded-xl"

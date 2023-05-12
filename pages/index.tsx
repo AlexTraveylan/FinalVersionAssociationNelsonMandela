@@ -12,18 +12,18 @@ export default function HomePage() {
       titleContent: 'A propos de Nous',
       textContent:
         "L'APE a pour but d'animer la communauté de parents et d'aider l'école de diverses manière.",
-      linkUrl: 'about',
+      linkUrl: 'about-us',
     },
-    {
-      id: 1,
-      imageUrl: '/accueil/ecole2.jpeg',
-      width: 1024,
-      height: 768,
-      alt: "Cette image montre l'entrée de la Maternelle du groupe scolaire",
-      titleContent: 'Comptabilité',
-      textContent: 'Une comptabilité transparente.',
-      linkUrl: 'comptabilite',
-    },
+    // {
+    //   id: 1,
+    //   imageUrl: '/accueil/ecole2.jpeg',
+    //   width: 1024,
+    //   height: 768,
+    //   alt: "Cette image montre l'entrée de la Maternelle du groupe scolaire",
+    //   titleContent: 'Comptabilité',
+    //   textContent: 'Une comptabilité transparente.',
+    //   linkUrl: 'comptabilite',
+    // },
     {
       id: 2,
       imageUrl: '/accueil/ecole3.jpg',
@@ -32,7 +32,7 @@ export default function HomePage() {
       alt: "Ici, on voit la cours de récréation des élémentaire du groupe scolaire lorsqu'on rentre par l'entrée Maternelle",
       titleContent: 'Historique',
       textContent: "Venez voir ce qu'on a déjà fait.",
-      linkUrl: 'historique',
+      linkUrl: 'about-us',
     },
     {
       id: 3,

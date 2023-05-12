@@ -43,6 +43,11 @@ export function Carroussel({ images }: { images: imageCaroussel[] }) {
                   src={image.imageUrl}
                   width={maxWidth}
                   height={(image.height * maxWidth) / image.width}
+                  style={{
+                    height: '75vh',
+                    width: 'auto',
+                    objectFit: 'cover',
+                  }}
                 />
               </div>
               {image.titleContent && image.textContent && (

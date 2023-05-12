@@ -61,6 +61,7 @@ export default function JoinusPage() {
     })
 
     if (response.ok) {
+      helloAssoRedirect()
       router.push('/about-us')
     }
   }

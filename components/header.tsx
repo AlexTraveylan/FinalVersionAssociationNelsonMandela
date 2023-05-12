@@ -35,7 +35,9 @@ export default function Header() {
                   signOut()
                 }}
               >
-                <SvgDeconnexion />
+                <div className="text-emerald-400">
+                  <SvgDeconnexion />
+                </div>
               </Link>
             </>
           ) : (
@@ -48,7 +50,9 @@ export default function Header() {
                   signIn()
                 }}
               >
-                <SvgConnexion />
+                <div className="text-rose-500">
+                  <SvgConnexion />
+                </div>
               </Link>
             </>
           )}
