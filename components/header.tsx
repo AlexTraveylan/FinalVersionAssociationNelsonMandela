@@ -50,7 +50,7 @@ export default function Header() {
                   signIn()
                 }}
               >
-                <div className="text-rose-500">
+                <div>
                   <SvgConnexion />
                 </div>
               </Link>

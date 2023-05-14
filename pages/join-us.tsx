@@ -2,7 +2,9 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
+import validator from 'validator'
 import Layout from '../components/layout'
+import { useError } from '../components/shared/hooks'
 import style from './joinus.module.css'
 
 export default function JoinusPage() {
@@ -13,6 +15,7 @@ export default function JoinusPage() {
   const [email, setEmail] = useState('')
   const [membre, setMembre] = useState<'actif' | 'passif'>('passif')
   const [phone, setPhone] = useState('')
+  const [errorMessage, pushError] = useError()
   const ratioImage = 0.45
 
   useEffect(() => {
@@ -34,6 +37,35 @@ export default function JoinusPage() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+
+    // Validation du nom
+    if (!validator.matches(nom.trim(), /^[a-zA-Zéèïôùç]+$/)) {
+      pushError('Le nom doit contenir uniquement des lettres')
+      return
+    }
+    if (!validator.isLength(nom.trim(), { min: 2 })) {
+      pushError('Le nom doit avoir au moins 2 lettres')
+      return
+    }
+    // Validation du prenom
+    if (!validator.matches(prenom.trim(), /^[a-zA-Zéèïôùç]+$/)) {
+      pushError('Le prenom doit contenir uniquement des lettres')
+      return
+    }
+    if (!validator.isLength(prenom.trim(), { min: 2 })) {
+      pushError('Le prenom doit avoir au moins 2 lettres')
+      return
+    }
+    // Validation de l'email
+    if (!validator.isEmail(email.trim())) {
+      pushError('Veuillez entrer une adresse email valide')
+      return
+    }
+    // Validation du phone
+    if (phone.trim() !== '' && !validator.isMobilePhone(phone.trim())) {
+      pushError('Veuillez entrer un numéro de téléphone valide')
+      return
+    }
     // const response1 = await fetch('api/users/getPublicKey')
     // if (!response1.ok) return
     // const data = await response1.json()
@@ -63,6 +95,9 @@ export default function JoinusPage() {
     if (response.ok) {
       helloAssoRedirect()
       router.push('/about-us')
+    } else {
+      const rep: { message: string } = await response.json()
+      pushError(rep.message)
     }
   }
 
@@ -114,7 +149,11 @@ export default function JoinusPage() {
                 type="email"
                 name="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                onChange={(e) => {
+                  const content = e.target.value
+                  const correctedEmail = content.replace('+', '')
+                  setEmail(correctedEmail)
+                }}
                 className="w-full p-1 bg-gray-300 rounded-xl indent-2"
               />
             </div>
@@ -171,6 +210,11 @@ export default function JoinusPage() {
               Payer la cotisation : 1€
             </button>
           </div>
+          {errorMessage != '' && (
+            <div className="text-center text-xs text-red-500">
+              {errorMessage}
+            </div>
+          )}
           <div className="flex flex-col text-gray-500">
             <p>
               * Permet de vous faire intégrer les groupes WhatsApp "membres
