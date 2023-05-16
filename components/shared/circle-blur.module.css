@@ -1,0 +1,6 @@
+.circle {
+  padding: 75vw;
+  background-color: rgb(18, 192, 44);
+  border-radius: 50%;
+  filter: blur(150px);
+}

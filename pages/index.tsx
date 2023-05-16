@@ -1,7 +1,12 @@
+import { useEffect, useState } from 'react'
 import { Carroussel, imageCaroussel } from '../components/caroussel'
+import { EventCard } from '../components/event-card'
 import Layout from '../components/layout'
+import { ReservationBuvette } from '../components/reservation-buvette'
+import { eventAssoApi } from './api/events/getEvents'
 
 export default function HomePage() {
+  const [lastEvent, setLastEvent] = useState<eventAssoApi>()
   const images: imageCaroussel[] = [
     {
       id: 0,
@@ -46,9 +51,43 @@ export default function HomePage() {
     },
   ]
 
+  async function recupEvents() {
+    const response = await fetch('api/events/getEvents')
+    if (response.ok) {
+      const data: eventAssoApi[] = await response.json()
+      const lastData: eventAssoApi = data.sort(
+        (a, b) => new Date(b.beginAt).getTime() - new Date(a.beginAt).getTime()
+      )[0]
+      setLastEvent(lastData)
+    }
+  }
+
+  useEffect(() => {
+    recupEvents()
+  }, [])
+
   return (
     <Layout>
-      <Carroussel images={images} />
+      {lastEvent && (
+        <div className="flex flex-col items-center py-3 gap-3 w-full">
+          <h1 className="text-2xl text-emerald-500 font-semibold">
+            Notre dernier événemment :
+          </h1>
+          <EventCard assoEvent={lastEvent} />
+        </div>
+      )}
+      <div className="flex flex-col items-center py-3 gap-3 w-full">
+        <h1 className="text-2xl text-emerald-500 font-semibold">
+          En ce moment
+        </h1>
+        <ReservationBuvette />
+      </div>
+      <div className="w-full flex flex-col gap-3 py-3 items-center justify-center">
+        <h1 className="text-2xl text-emerald-500 font-semibold">
+          En savoir plus
+        </h1>
+        <Carroussel images={images} />
+      </div>
     </Layout>
   )
 }
