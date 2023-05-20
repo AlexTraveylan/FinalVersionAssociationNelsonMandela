@@ -1,55 +1,15 @@
+import Image from 'next/image'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
-import { Carroussel, imageCaroussel } from '../components/caroussel'
-import { EventCard } from '../components/event-card'
 import Layout from '../components/layout'
+import { PresentationAsso } from '../components/presentation-asso'
 import { ReservationBuvette } from '../components/reservation-buvette'
+import { RoundedConstellation } from '../components/rounded-constellation'
+import Button from '../components/shared/btn-accueil'
 import { eventAssoApi } from './api/events/getEvents'
 
 export default function HomePage() {
   const [lastEvent, setLastEvent] = useState<eventAssoApi>()
-  const images: imageCaroussel[] = [
-    {
-      id: 0,
-      imageUrl: '/accueil/ecole1.jpeg',
-      width: 1024,
-      height: 768,
-      alt: 'Une image de la facade du groupe scolaire Nelson Mandela',
-      titleContent: 'A propos de Nous',
-      textContent:
-        "L'APE a pour but d'animer la communauté de parents et d'aider l'école de diverses manière.",
-      linkUrl: 'about-us',
-    },
-    // {
-    //   id: 1,
-    //   imageUrl: '/accueil/ecole2.jpeg',
-    //   width: 1024,
-    //   height: 768,
-    //   alt: "Cette image montre l'entrée de la Maternelle du groupe scolaire",
-    //   titleContent: 'Comptabilité',
-    //   textContent: 'Une comptabilité transparente.',
-    //   linkUrl: 'comptabilite',
-    // },
-    {
-      id: 2,
-      imageUrl: '/accueil/ecole3.jpg',
-      width: 4032,
-      height: 3024,
-      alt: "Ici, on voit la cours de récréation des élémentaire du groupe scolaire lorsqu'on rentre par l'entrée Maternelle",
-      titleContent: 'Historique',
-      textContent: "Venez voir ce qu'on a déjà fait.",
-      linkUrl: 'about-us',
-    },
-    {
-      id: 3,
-      imageUrl: '/accueil/ecole4.jpg',
-      width: 4032,
-      height: 3024,
-      alt: 'Dans cette derniere image, on voit encore la cours de récréation des élementaire du groupe scolaire mais cette fois ci du point de vue de la sente.',
-      titleContent: 'Rejoignez-nous',
-      textContent: "Rejoignez l'association, et participez à l'aventure.",
-      linkUrl: 'join-us',
-    },
-  ]
 
   async function recupEvents() {
     const response = await fetch('api/events/getEvents')
@@ -68,26 +28,51 @@ export default function HomePage() {
 
   return (
     <Layout>
+      <div className="flex flex-row flex-wrap gap-20 items-center justify-center py-5">
+        <RoundedConstellation />
+        <PresentationAsso />
+      </div>
       {lastEvent && (
-        <div className="flex flex-col items-center py-3 gap-3 w-full">
-          <h1 className="text-2xl text-emerald-500 font-semibold">
-            Notre dernier événemment :
-          </h1>
-          <EventCard assoEvent={lastEvent} />
+        <div className="w-full min-[1480px]:relative">
+          <div className="min-[1480px]:w-full min-[1480px]:bg-white min-[1480px]:h-72"></div>
+          <div className="min-[1480px]:w-full min-[1480px]:bg-black min-[1480px]:h-72"></div>
+          <div className="min-[1480px]:absolute min-[1480px]:top-1/2 min-[1480px]:left-1/2 min-[1480px]:translate-x-[-50%] min-[1480px]:translate-y-[-50%] bg-slate-50">
+            <div className="flex flex-row flex-wrap gap-5 justify-center p-5">
+              <div className="p-5 flex flex-col gap-3 w-[360px] items-center">
+                <h2 className="font-semibold text-2xl text-center">
+                  Qui sommes nous ?
+                </h2>
+                <p>
+                  Bienvenue à l'Association des Parents d'Élèves. Nous mettons
+                  en scène des événements mémorables pour enrichir l'expérience
+                  éducative de nos enfants. Nos kermesses sont des festivals
+                  vibrants avec des jeux pour nos enfants, nos goûters sont des
+                  moments de convivialité avec des mets préparés par nos parents
+                  bénévoles et nous soutenons activement les fêtes scolaires
+                  pour célébrer la diversité et le talent de nos enfants.
+                  Rejoignez-nous dans cette belle aventure.
+                </p>
+                <Link href="/about-us">
+                  <Button mode="dark">En savoir plus</Button>
+                </Link>
+              </div>
+              <Link
+                href={lastEvent.affichieUrl!}
+                target="_blank"
+                className="flex items-center justify-center w-[360px]"
+              >
+                <Image
+                  src={lastEvent.affichieUrl!}
+                  alt="image de l'affiche du dernier événement de l'association"
+                  width={256}
+                  height={256}
+                />
+              </Link>
+            </div>
+          </div>
         </div>
       )}
-      <div className="flex flex-col items-center py-3 gap-3 w-full">
-        <h1 className="text-2xl text-emerald-500 font-semibold">
-          En ce moment
-        </h1>
-        <ReservationBuvette />
-      </div>
-      <div className="w-full flex flex-col gap-3 py-3 items-center justify-center">
-        <h1 className="text-2xl text-emerald-500 font-semibold">
-          En savoir plus
-        </h1>
-        <Carroussel images={images} />
-      </div>
+      <ReservationBuvette />
     </Layout>
   )
 }

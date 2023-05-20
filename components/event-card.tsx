@@ -13,7 +13,7 @@ export function EventCard({ assoEvent }: { assoEvent: eventAssoApi }) {
   const year = beginAtToDate.getFullYear()
   const contentParsed = assoEvent.content.split('\n')
   return (
-    <div className="flex flex-row rounded-md shadow-md w-[345px] h-56 justify-center overflow-hidden">
+    <div className="flex flex-row w-[345px] h-56 justify-center overflow-hidden">
       <div className="w-[100px] flex flex-col justify-between py-3">
         <div className="flex flex-row gap-2 items-center justify-center">
           <h3 className="text-xl">{day}</h3>

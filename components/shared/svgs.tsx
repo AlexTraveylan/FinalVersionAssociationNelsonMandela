@@ -353,3 +353,25 @@ export function SvgInstagram({ size = 25, stroke = 1.3 }: SvgProps) {
     </svg>
   )
 }
+
+export function SvgMenu({ size = 25, stroke = 1.3 }: SvgProps) {
+  return (
+    <svg
+      width={`${size}px`}
+      height={`${size}px`}
+      strokeWidth={`${stroke}`}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      color="#000000"
+    >
+      <path
+        d="M3 5h18M3 12h18M3 19h18"
+        stroke="#000000"
+        strokeWidth={`${stroke}`}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
+    </svg>
+  )
+}

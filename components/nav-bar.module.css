@@ -3,6 +3,7 @@
   left: 0;
   z-index: 3;
   height: 50px;
+  width: 62%;
 }
 
 .nav__container nav {
@@ -42,4 +43,46 @@
 
 .nav__container a.active::after {
   transform: scaleX(1);
+}
+
+.nav__container div {
+  display: none;
+}
+
+.menu__button {
+  display: none;
+}
+
+@media (max-width: 640px) {
+  .nav__container nav {
+    display: none;
+  }
+
+  .menu__button {
+    display: block;
+    position: fixed;
+    top: 96px;
+    right: 0;
+    padding: 15px;
+    z-index: 100;
+    background-color: #0596688c;
+    border-radius: 50%;
+  }
+
+  .nav__container div.sidebar {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    right: 0;
+    top: 96px;
+    background-color: white;
+    z-index: 200 !important;
+    padding: 40px;
+    gap: 30px;
+    height: calc(100% - 96px);
+  }
+
+  .nav__container div.open {
+    display: none; /* Affichez la barre de navigation lorsque le menu latéral est ouvert */
+  }
 }

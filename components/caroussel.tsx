@@ -48,7 +48,6 @@ export function Carroussel({ images }: { images: imageCaroussel[] }) {
                     width: 'auto',
                     objectFit: 'cover',
                   }}
-                  priority={currentIndex != 0}
                 />
               </div>
               {image.titleContent && image.textContent && (
