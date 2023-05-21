@@ -8,7 +8,7 @@ export function Footer() {
   const formatMouth = mouth.charAt(0).toUpperCase() + mouth.slice(1)
   return (
     <footer className="flex flex-row justify-between items-center px-3 h-24">
-      <p className="min-w-[20%]">Version 1.0.0</p>
+      <p className="min-w-[20%]">Version 1.0.1</p>
       <div className="flex flex-col items-center">
         <p>{`${formatMouth} ${year}`}</p>
         <Link
