@@ -25,12 +25,6 @@ export default function Header() {
           <NavBar />
           {session && session.user ? (
             <>
-              <div className="hidden flex-col items-center sm:flex">
-                <p>Connecté en tant que :</p>
-                <p className="font-bold">
-                  {session.user.name ?? session.user.email}
-                </p>
-              </div>
               <Link
                 className="min-w-[5%] flex justify-end"
                 href={`/api/auth/signout`}
