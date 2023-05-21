@@ -1,5 +1,5 @@
 import { LogAssoEvent } from '@prisma/client'
-import { prisma } from '../prisma/prisma-client'
+import prisma from '../prisma/prisma-client'
 
 export class LogAssoEventService {
   async createLogAssoEvent(

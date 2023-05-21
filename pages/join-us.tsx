@@ -16,7 +16,6 @@ export default function JoinusPage() {
   const [membre, setMembre] = useState<'actif' | 'passif'>('passif')
   const [phone, setPhone] = useState('')
   const [errorMessage, pushError] = useError()
-  const ratioImage = 0.45
 
   useEffect(() => {
     if (session?.user?.name) {
@@ -106,10 +105,10 @@ export default function JoinusPage() {
       <div className="flex flex-col items-center justify-center min-h-[60vh] py-8 space-y-5">
         <div className="flex justify-center">
           <Image
-            src="/img/LogoAsso.jpg"
+            src="/logo/LogoAsso.jpg"
             alt="Logo de l'association, c'est une image de Nelson Mandela avec l'inscription APE Nelson Mandela"
-            width={414 * ratioImage}
-            height={208 * ratioImage}
+            width={200}
+            height={100}
           />
         </div>
         <h2 className="text-emerald-400 text-3xl">Rejoignez-nous !</h2>

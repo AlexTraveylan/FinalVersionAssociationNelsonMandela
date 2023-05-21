@@ -1,5 +1,5 @@
 import { UserAppAsso } from '@prisma/client'
-import { prisma } from '../prisma/prisma-client'
+import prisma from '../prisma/prisma-client'
 
 export class UserAppAssoService {
   async createUser(

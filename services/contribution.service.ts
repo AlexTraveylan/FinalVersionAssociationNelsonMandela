@@ -1,5 +1,5 @@
 import { Contribution } from '@prisma/client'
-import { prisma } from '../prisma/prisma-client'
+import prisma from '../prisma/prisma-client'
 
 export class ContributionService {
   async createContribution(
