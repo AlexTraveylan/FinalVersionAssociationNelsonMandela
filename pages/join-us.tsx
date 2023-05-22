@@ -73,8 +73,12 @@ export default function JoinusPage() {
     const emailBuffer = Buffer.from(email, 'utf-8')
     const phoneBuffer = Buffer.from(phone, 'utf-8')
     console.log(emailBuffer, phoneBuffer, publicKey)
-    const encryptedEmail = publicKeyEncrypt(emailBuffer, publicKey)
-    const encryptedPhone = publicKeyEncrypt(phoneBuffer, publicKey)
+    try {
+      const encryptedEmail = publicKeyEncrypt(emailBuffer, publicKey)
+      const encryptedPhone = publicKeyEncrypt(phoneBuffer, publicKey)
+    } catch (err) {
+      console.log(err)
+    }
     console.log('coucou')
 
     const newUser = {
