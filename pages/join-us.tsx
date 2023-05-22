@@ -76,7 +76,7 @@ export default function JoinusPage() {
     try {
       const encryptedEmail = publicKeyEncrypt(emailBuffer, publicKey)
       const encryptedPhone = publicKeyEncrypt(phoneBuffer, publicKey)
-      console.log('coucou')
+      console.log('coucou1')
       const newUser = {
         nom: nom,
         prenom: prenom,
