@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import validator from 'validator'
 import Layout from '../components/layout'
 import { useError } from '../components/shared/hooks'
+import { publicKeyEncrypt } from '../services/security.service'
 import style from './joinus.module.css'
 
 export default function JoinusPage() {
@@ -65,25 +66,25 @@ export default function JoinusPage() {
       pushError('Veuillez entrer un numéro de téléphone valide')
       return
     }
-    // const response1 = await fetch('api/users/getPublicKey')
-    // if (!response1.ok) return
-    // const data = await response1.json()
-    // const publicKey = String(data.public_key)
-    // if (!publicKey) return
-    // const emailBuffer = Buffer.from(email, 'utf8')
-    // const phoneBuffer = Buffer.from(phone, 'utf8')
-    // const encryptedEmail = publicKeyEncrypt(emailBuffer, publicKey)
-    // const encryptedPhone = publicKeyEncrypt(phoneBuffer, publicKey)
+
+    const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY
+    if (!publicKey) return
+
+    const emailBuffer = Buffer.from(email, 'utf-8')
+    const phoneBuffer = Buffer.from(phone, 'utf-8')
+    console.log(publicKey, emailBuffer, phoneBuffer)
+    const encryptedEmail = publicKeyEncrypt(emailBuffer, publicKey)
+    const encryptedPhone = publicKeyEncrypt(phoneBuffer, publicKey)
 
     const newUser = {
       nom: nom,
       prenom: prenom,
-      email: email,
+      encryptedEmail: encryptedEmail,
       membre: membre,
-      phone: phone,
+      encryptedPhone: encryptedPhone,
     }
 
-    const response = await fetch('api/users/create2', {
+    const response = await fetch('api/users/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

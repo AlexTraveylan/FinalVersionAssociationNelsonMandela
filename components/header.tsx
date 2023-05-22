@@ -6,7 +6,6 @@ import { SvgConnexion, SvgDeconnexion } from './shared/svgs'
 
 export default function Header() {
   const { data: session } = useSession()
-  const ratioImage = 0.35
 
   return (
     <>
@@ -17,8 +16,8 @@ export default function Header() {
               <Image
                 src="/logo/LogoAsso.jpg"
                 alt="Logo de l'association, c'est une image de Nelson Mandela avec l'inscription APE Nelson Mandela"
-                width={414 * ratioImage}
-                height={208 * ratioImage}
+                width={145}
+                height={73}
               />
             </Link>
           </div>

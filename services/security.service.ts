@@ -29,11 +29,11 @@ export function publicKeyEncrypt(data: Buffer, publicKey: string): string {
 // decrypt RSA avec private key
 export function privateKeyDecrypt(
   encryptedDataBuffer: Buffer,
-  privateKeyBuffer: Buffer
+  privateKey: string
 ): Buffer {
   const decryptedData = crypto.privateDecrypt(
     {
-      key: privateKeyBuffer,
+      key: privateKey,
       padding: crypto.constants.RSA_PKCS1_OAEP_PADDING,
     },
     encryptedDataBuffer
