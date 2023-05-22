@@ -75,36 +75,30 @@ export default function JoinusPage() {
 
     const emailBuffer = Buffer.from(email, 'utf-8')
     const phoneBuffer = Buffer.from(phone, 'utf-8')
-    console.log(email, phone, emailBuffer, phoneBuffer, publicKey)
-    try {
-      const encryptedEmail = publicKeyEncrypt(emailBuffer, publicKey)
-      const encryptedPhone = publicKeyEncrypt(phoneBuffer, publicKey)
-      console.log('coucou1')
-      const newUser = {
-        nom: nom,
-        prenom: prenom,
-        encryptedEmail: encryptedEmail,
-        membre: membre,
-        encryptedPhone: encryptedPhone,
-      }
+    const encryptedEmail = publicKeyEncrypt(emailBuffer, publicKey)
+    const encryptedPhone = publicKeyEncrypt(phoneBuffer, publicKey)
+    const newUser = {
+      nom: nom,
+      prenom: prenom,
+      encryptedEmail: encryptedEmail,
+      membre: membre,
+      encryptedPhone: encryptedPhone,
+    }
 
-      const response = await fetch('api/users/create', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newUser),
-      })
+    const response = await fetch('api/users/create', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(newUser),
+    })
 
-      if (response.ok) {
-        helloAssoRedirect()
-        router.push('/about-us')
-      } else {
-        const rep: { message: string } = await response.json()
-        pushError(rep.message)
-      }
-    } catch (err) {
-      console.log(err)
+    if (response.ok) {
+      helloAssoRedirect()
+      router.push('/about-us')
+    } else {
+      const rep: { message: string } = await response.json()
+      pushError(rep.message)
     }
   }
 
