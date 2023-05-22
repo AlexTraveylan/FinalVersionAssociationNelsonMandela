@@ -76,33 +76,32 @@ export default function JoinusPage() {
     try {
       const encryptedEmail = publicKeyEncrypt(emailBuffer, publicKey)
       const encryptedPhone = publicKeyEncrypt(phoneBuffer, publicKey)
+      console.log('coucou')
+      const newUser = {
+        nom: nom,
+        prenom: prenom,
+        encryptedEmail: encryptedEmail,
+        membre: membre,
+        encryptedPhone: encryptedPhone,
+      }
+
+      const response = await fetch('api/users/create', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      })
+
+      if (response.ok) {
+        helloAssoRedirect()
+        router.push('/about-us')
+      } else {
+        const rep: { message: string } = await response.json()
+        pushError(rep.message)
+      }
     } catch (err) {
       console.log(err)
-    }
-    console.log('coucou')
-
-    const newUser = {
-      nom: nom,
-      prenom: prenom,
-      encryptedEmail: encryptedEmail,
-      membre: membre,
-      encryptedPhone: encryptedPhone,
-    }
-
-    const response = await fetch('api/users/create', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(newUser),
-    })
-
-    if (response.ok) {
-      helloAssoRedirect()
-      router.push('/about-us')
-    } else {
-      const rep: { message: string } = await response.json()
-      pushError(rep.message)
     }
   }
 
