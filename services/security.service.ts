@@ -14,6 +14,7 @@ export function generateRSAKeyPair() {
 
 // Encrypt RSA avec public key
 export function publicKeyEncrypt(data: Buffer, publicKey: string): string {
+  console.error(data, publicKey)
   const publicKeyBuffer = Buffer.from(publicKey, 'utf-8')
   const encryptedData = crypto.publicEncrypt(
     {
