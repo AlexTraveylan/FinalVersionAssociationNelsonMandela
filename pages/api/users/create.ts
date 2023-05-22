@@ -17,6 +17,7 @@ export default async function handler(
   }
 
   const privateKey = process.env.PRIVATE_KEY
+  console.log(privateKey)
   if (!privateKey) {
     return res.status(500).json({ message: 'Un probleme est survenu.' })
   }
