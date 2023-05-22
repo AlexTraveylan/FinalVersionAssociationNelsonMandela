@@ -67,7 +67,10 @@ export default function JoinusPage() {
       return
     }
 
-    const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY
+    const responseRSA = await fetch('/api/examples/get-publicKey')
+    if (!responseRSA.ok) return
+
+    const { publicKey } = await responseRSA.json()
     if (!publicKey) return
 
     const emailBuffer = Buffer.from(email, 'utf-8')
