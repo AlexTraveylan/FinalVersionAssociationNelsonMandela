@@ -17,7 +17,7 @@ export default async function handler(
   }
 
   const privateKey = process.env.PRIVATE_KEY
-  console.log(privateKey)
+  console.log(String(privateKey))
   if (!privateKey) {
     return res.status(500).json({ message: 'Un probleme est survenu.' })
   }
@@ -60,10 +60,7 @@ export default async function handler(
   }
 
   const encryptedEmailToBuffer = Buffer.from(encryptedEmail, 'base64')
-  const emailBuffer = privateKeyDecrypt(
-    encryptedEmailToBuffer,
-    String(privateKey)
-  )
+  const emailBuffer = privateKeyDecrypt(encryptedEmailToBuffer, privateKey)
   const email = emailBuffer.toString('utf-8')
   console.log(email)
 
