@@ -1,5 +1,6 @@
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import validator from 'validator'
@@ -172,7 +173,7 @@ export default function JoinusPage() {
                   }
                   className="radio-green"
                 />
-                Membre actif
+                Membre actif **
               </label>
               <label>
                 <input
@@ -185,13 +186,13 @@ export default function JoinusPage() {
                   }
                   className="radio-green"
                 />
-                Membre passif
+                Membre passif **
               </label>
             </div>
             <div className="flex flex-col">
               <label htmlFor="phone" className="mb-1">
                 Numéro de téléphone
-                <span className="text-gray-500"> (facultatif*)</span>
+                <span className="text-gray-500"> (facultatif *)</span>
               </label>
               <input
                 type="tel"
@@ -216,11 +217,17 @@ export default function JoinusPage() {
               {errorMessage}
             </div>
           )}
-          <div className="flex flex-col text-gray-500">
+          <div className="flex flex-col text-gray-500 gap-5">
             <p>
               * Permet de vous faire intégrer les groupes WhatsApp "membres
               actifs" ou "membres passifs" pour vous tenir informé de
               l'organisation des événements.
+            </p>
+            <p>
+              <Link href="organigramme" className="font-semibold">
+                ** En savoir plus sur passif / actif :{' '}
+                <span className="text-emerald-400">Organigramme</span>
+              </Link>
             </p>
           </div>
         </form>
