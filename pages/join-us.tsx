@@ -208,7 +208,7 @@ export default function JoinusPage() {
               onClick={(e) => handleSubmit(e)}
               className="w-full py-1 font-bold text-white bg-emerald-400 rounded-xl"
             >
-              Payer la cotisation : 1€
+              Payer la cotisation : 5€
             </button>
           </div>
           {errorMessage != '' && (
