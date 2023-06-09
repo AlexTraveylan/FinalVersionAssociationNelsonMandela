@@ -1,0 +1,18 @@
+/* petition.module.css */
+.slideEnter {
+  transform: translateX(-100%);
+}
+
+.slideEnterActive {
+  transform: translateX(0);
+  transition: transform 200ms;
+}
+
+.slideExit {
+  transform: translateX(0);
+}
+
+.slideExitActive {
+  transform: translateX(-100%);
+  transition: transform 200ms;
+}

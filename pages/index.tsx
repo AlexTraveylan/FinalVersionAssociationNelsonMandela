@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Layout from '../components/layout'
+import Petition from '../components/petition'
 import { PresentationAsso } from '../components/presentation-asso'
 import { ReservationBuvette } from '../components/reservation-buvette'
 import { RoundedConstellation } from '../components/rounded-constellation'
@@ -28,6 +29,7 @@ export default function HomePage() {
 
   return (
     <Layout>
+      <Petition />
       <div className="flex flex-row flex-wrap gap-20 items-center justify-center py-5">
         <RoundedConstellation />
         <PresentationAsso />
