@@ -1,11 +1,11 @@
 // petition.tsx
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { CSSTransition } from 'react-transition-group'
 import styles from './petition.module.css'
 
 type Props = {}
 
-const Petition: React.FC<Props> = () => {
+function Petition() {
   const [showButton, setShowButton] = useState(true)
 
   const handleClose = () => {
@@ -16,7 +16,12 @@ const Petition: React.FC<Props> = () => {
     <CSSTransition
       in={showButton}
       timeout={200}
-      classNames={styles}
+      classNames={{
+        enter: styles.slideEnter,
+        enterActive: styles.slideEnterActive,
+        exit: styles.slideExit,
+        exitActive: styles.slideExitActive,
+      }}
       unmountOnExit
     >
       <div className="fixed left-0 top-1/2 transform -translate-y-1/2 z-50">
